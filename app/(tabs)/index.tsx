@@ -14,11 +14,11 @@ export default function HomeScreen() {
 
   // 🔹 Typing text state
   const fullText = 'Welcome back to FinWise';
-  const [typedText, setTypedText] = useState('Sneha');//useState('') is react hook to manage different states including intial state
+  const [typedText, setTypedText] = useState('Sneha');//useState('') is react hook to render components when state changes
   const [booleanflag, setbooleanflag] = useState(false);
   // 🔹 State for Average Score
   const [avgScore, setAvgScore] = useState<number | null>(null);
-  
+
   // 🔹 Animations for UI
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
@@ -28,12 +28,12 @@ export default function HomeScreen() {
     Animated.parallel([
       Animated.timing(fadeAnim, {
         toValue: 0.7,
-        duration: 2000,
+        duration: 8000,
         useNativeDriver: true,
       }),
       Animated.timing(slideAnim, {
         toValue: 0,
-        duration: 800,
+        duration: 8000,
         useNativeDriver: true,
       }),
     ]).start();
@@ -54,17 +54,24 @@ export default function HomeScreen() {
     }, 50); // typing speed
 
     // return () => clearInterval(interval);
-  },[booleanflag]);
+  }, [booleanflag]);
 
   useEffect(() => {
     console.log('typedText state:', typedText);
+
+
   }, [typedText]);
+
+  useEffect(() => {
+    console.log(fadeAnim, slideAnim);
+
+  }, [slideAnim, fadeAnim]);
 
   // 🔹 Generate random average score
   const generateAvgScore = () => {
     const randomScore = Math.floor(Math.random() * 101);
     setAvgScore(randomScore);
-   // setbooleanflag(!booleanflag);
+    // setbooleanflag(!booleanflag);
   };
 
   const handlePress = () => {
@@ -79,7 +86,7 @@ export default function HomeScreen() {
     >
       <Animated.View
         style={{
-          opacity:fadeAnim,
+          opacity: fadeAnim,
           transform: [{ translateX: slideAnim }, { translateY: slideAnim }],
           width: '100%',
           alignItems: 'center',
